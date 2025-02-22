@@ -23,6 +23,12 @@ const MovieCard = ({ movie }) => {
         <span className="text-gray-600">
           {new Date(movie.release_date).toLocaleDateString("es-ES")}
         </span>
+        
+        {/* Mostrar la valoración del movie */}
+        <span className="text-yellow-400 font-semibold"> 
+          {movie.vote_average.toFixed(1)} {/* Asegúrate de que se muestre con 1 decimal */}
+        </span>
+  
         <Link
           to={`/movies/${movie.id}`}
           className="text-blue-600 hover:text-blue-800"
@@ -32,6 +38,7 @@ const MovieCard = ({ movie }) => {
       </div>
     </div>
   );
+  
   
   
 };

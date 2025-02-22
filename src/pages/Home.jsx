@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import useFetch from '../hooks/useFetch';
 import MovieCard from '../components/MovieCard';
+import Search from '../components/search';
+
 
 const Home = () => {
   const [movieListPage, setMovieListPage] = useState(1)
@@ -25,33 +27,42 @@ const Home = () => {
   }
   return (
     <>
-      <div className="inline-block border-b-4 border-double border-gray-500">
-        <ul className="flex space-x-4 p-4 bg-gray-900 text-white">
-          <li
-            onClick={() => setListType("now_playing")}
-            className="px-4 py-2 cursor-pointer transition duration-300 hover:text-blue-800"
-          >
-            Cartelera
-          </li>
-          <li
-            onClick={() => setListType("popular")}
-            className="px-4 py-2 cursor-pointer transition duration-300 hover:text-blue-800"
-          >
-            Populares
-          </li>
-          <li
-            onClick={() => setListType("top_rated")}
-            className="px-4 py-2 cursor-pointer transition duration-300 hover:text-blue-800"
-          >
-            Más votados
-          </li>
-          <li
-            onClick={() => setListType("upcoming")}
-            className="px-4 py-2 cursor-pointer transition duration-300 hover:text-blue-800"
-          >
-            Estrenos
-          </li>
-        </ul>
+      <div className="inline-block">
+        {/* Menú de navegación y búsqueda en la misma línea */}
+        <div className="flex items-center justify-between p-6 bg-gray-900 text-white">
+          {/* Menú */}
+          <ul className="flex space-x-4">
+            <li
+              onClick={() => setListType("now_playing")}
+              className="px-4 py-2 cursor-pointer transition duration-300 hover:text-blue-800"
+            >
+              Cartelera
+            </li>
+            <li
+              onClick={() => setListType("popular")}
+              className="px-4 py-2 cursor-pointer transition duration-300 hover:text-blue-800"
+            >
+              Populares
+            </li>
+            <li
+              onClick={() => setListType("top_rated")}
+              className="px-4 py-2 cursor-pointer transition duration-300 hover:text-blue-800"
+            >
+              Más votados
+            </li>
+            <li
+              onClick={() => setListType("upcoming")}
+              className="px-4 py-2 cursor-pointer transition duration-300 hover:text-blue-800"
+            >
+              Estrenos
+            </li>
+          </ul>
+  
+          {/* Campo de búsqueda alineado a la derecha */}
+          <div className="flex-shrink-0 ml-12">
+            <Search movieList={movieList} setMovieList={setMovieList} />
+          </div>
+        </div>
       </div>
   
       <div className="p-6">
@@ -68,7 +79,5 @@ const Home = () => {
     </>
   );
   
-  
-};
-
+};  
 export default Home;
