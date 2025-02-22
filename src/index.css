@@ -1,4 +1,5 @@
 @import "tailwindcss";
 
-
-
+body {
+    @apply bg-gray-900 text-white; /* Fondo oscuro y texto blanco */
+  }
