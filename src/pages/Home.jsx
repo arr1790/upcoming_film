@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import useFetch from '../hooks/useFetch';
+
+import { useEffect,useState } from 'react';
 import MovieCard from '../components/MovieCard';
 import Search from '../components/search';
 
@@ -9,11 +9,17 @@ const Home = () => {
   const [listType, setListType] = useState('now_playing');
 
   const UPCOMING_URL = `https://api.themoviedb.org/3/movie/${listType}?api_key=a67ff818ee91cb525d9643b776006095&language=es-ES&page=${movieListPage}`;
-  useFetch(UPCOMING_URL, setMovieList);
+  // useFetch(UPCOMING_URL, setMovieList);
+
+   useEffect(() => {
+          fetch( UPCOMING_URL)
+              .then(response => response.json())
+              .then(data => {setMovieList(data.results); console.log(data.results)})
+      }, [listType, movieListPage]);
 
   const handleListTypeChange = (type) => {
     setListType(type);
-    setMovieListPage(1); // Reiniciar la página a 1
+    setMovieListPage(1); 
   };
 
   const mappedListType = (type) => {

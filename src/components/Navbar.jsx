@@ -7,7 +7,7 @@ const Navbar = () => {
       <ul className="flex justify-between items-center text-white">
         <li>
           <Link to="/" className="hover:text-blue-400 ">Cine</Link>
-          <Link to="/" className="hover:text-blue-400 pl-4">Inicar sesion</Link>
+          <Link to="/" className="hover:text-blue-400 pl-4 w-8 h-8">Iniciar sesion</Link>
           <Link to="/" className="hover:text-blue-400 pl-4">Registrarse</Link>
         </li>
          <li>      
