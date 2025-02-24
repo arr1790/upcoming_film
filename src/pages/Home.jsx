@@ -1,7 +1,7 @@
 
 import { useEffect,useState } from 'react';
 import MovieCard from '../components/MovieCard';
-import Search from '../components/search';
+import Search from '../components/Search';
 
 const Home = () => {
   const [movieListPage, setMovieListPage] = useState(1);
