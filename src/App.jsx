@@ -10,17 +10,20 @@ import Favourite from "./pages/Favourite";
 const App = () => {
   return (
     <Router>
-      <Navbar />
+      <Navbar /> {/* Navbar siempre visible */}
+
       <Routes>
-        <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/movies/:movieId" element={<MovieDetail />} />
-        <Route path="/" element={<Footer />} />
-        <Route path="/favourite" element ={<Favourite />} />
+        <Route path="/favourite" element={<Favourite />} />
       </Routes>
+
+      <Footer /> {/* Footer siempre visible */}
     </Router>
   );
 };
 
 export default App;
+
 
