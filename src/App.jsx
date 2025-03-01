@@ -5,25 +5,21 @@ import Home from "./pages/Home";
 import MovieDetail from "./pages/MovieDetail";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
-import Favourite from "./pages/Favourite";
+import Register from "./pages/Register";
 
 const App = () => {
   return (
     <Router>
-      <Navbar /> {/* Navbar siempre visible */}
-
+      <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Home />} />
         <Route path="/movies/:movieId" element={<MovieDetail />} />
-        <Route path="/favourite" element={<Favourite />} />
+        <Route path="/" element={<Footer />} />
       </Routes>
-
-      <Footer /> {/* Footer siempre visible */}
     </Router>
   );
 };
 
 export default App;
-
-

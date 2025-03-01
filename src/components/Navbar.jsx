@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import authService from '../authService';
 import { AuthContext } from '../context/authContext';
 
+
 const Navbar = () => {
 
   const { isLogged, setIsLogged } = useContext(AuthContext);
@@ -25,8 +26,9 @@ const Navbar = () => {
           <li>
             <Link to="/" className="hover:text-blue-400 ">Cine</Link>
             <Link to="/login" className="hover:text-blue-400 pl-4 w-8 h-8">Iniciar sesion</Link>
-            <Link to="/" className="hover:text-blue-400 pl-4">Registrarse</Link>
-            <Link to="/favourite" className="hover:text-blue-400 pl-4">Lista de Favoritas</Link>
+            <Link to="/register" className="hover:text-blue-400 pl-4">Registrarse</Link>
+            <Link to ="/favourite" className="hover:text-blue-400 pl-4">Favoritos</Link>
+            
           </li>
            {/* <li>
             <img src="/camara.png" alt="Cine" className="w-8 h-8" />
