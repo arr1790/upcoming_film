@@ -5,43 +5,60 @@ import { AuthContext } from "../context/authContext";
 
 function Favourite() {
   const [favourites, setFavourites] = useState([]);
-  const [loading, setLoading] = useState(true);  // For loading state
-  const [error, setError] = useState(null);  // For error state
+  const [loading, setLoading] = useState(true);  
+  const [error, setError] = useState(null);
   const { isLogged } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchFavourites = async () => {
-      if (!isLogged) return; // Don't fetch if not logged in
-      setLoading(true); // Start loading
+      if (!isLogged) return;
+      setLoading(true); 
       try {
         const user = JSON.parse(localStorage.getItem("user"));
         const q = query(collection(db, "favourites"), where("userId", "==", user.uid));
         const querySnapshot = await getDocs(q);
-        setFavourites(querySnapshot.docs.map(doc => doc.data()));
+
+        const favouritesData = querySnapshot.docs.map(doc => doc.data());
+        setFavourites(favouritesData);
       } catch (error) {
-        setError("Error fetching favorites"); // Update error state
+        setError("Error fetching favorites"); 
         console.error("Error fetching favorites:", error);
       } finally {
-        setLoading(false); // End loading
+        setLoading(false);
       }
     };
 
     fetchFavourites();
-  }, [isLogged]); // Re-fetch if isLogged changes
+  }, [isLogged]);
 
   return (
-    <div>
-      <h1 className="text-white text-3xl font-semibold">Tus películas favoritas</h1>
-      
-      {loading && <p>Loading...</p>}
+    <div className="min-h-screen bg-gray-900 p-4">
+      <h1 className="text-white text-2xl font-bold mb-4">TOP PELICULAS</h1>
+
+      {loading && <p className="text-white">Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
-      
-      <ul>
+
+      <ul className="space-y-4">
         {favourites.length === 0 ? (
-          <p>No tienes películas favoritas.</p>
+          <p className="text-white">No tienes películas favoritas.</p>
         ) : (
           favourites.map((fav, index) => (
-            <li key={index}>ID de Película: {fav.movieId}</li>
+            <li key={index} className="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all">
+              <div className="flex">
+                <div className="relative w-32 h-48 flex-shrink-0"> {/* Imagen más pequeña */}
+                  <img
+                    className="absolute top-0 left-0 w-full h-full object-cover"
+                    src={`https://image.tmdb.org/t/p/w500${fav.poster_path}`}
+                    alt={fav.title}
+                  />
+                </div>
+                <div className="p-3 flex-grow">
+                  <h2 className="text-lg text-white font-bold mb-1">{fav.title}</h2>
+                  <p className="text-gray-400 text-sm mb-2 line-clamp-2">{fav.overview}</p>
+                  <p className="text-gray-500 text-xs">Estreno: {fav.release_date}</p>
+                </div>
+              </div>
+            </li>
           ))
         )}
       </ul>

@@ -9,7 +9,24 @@ function AddToFavourite({ movieId }) {
   const [isFav, setIsFav] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [movieData, setMovieData] = useState(null);
 
+  // Obtener los datos de la película desde la API de TMDb
+  useEffect(() => {
+    const fetchMovieData = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=es-ES`);
+        const data = await response.json();
+        setMovieData(data);
+      } catch (err) {
+        console.error("Error fetching movie data:", err);
+      }
+    };
+
+    fetchMovieData();
+  }, [movieId]);
+
+  // Comprobar si la película ya está en los favoritos
   useEffect(() => {
     const checkIfFavourite = async () => {
       const user = auth.currentUser;
@@ -37,6 +54,7 @@ function AddToFavourite({ movieId }) {
     checkIfFavourite();
   }, [movieId, auth.currentUser]);
 
+  // Agregar la película a favoritos
   const addToFav = async () => {
     const user = auth.currentUser;
     if (!user) {
@@ -44,41 +62,23 @@ function AddToFavourite({ movieId }) {
       return;
     }
 
-    const sessionId = localStorage.getItem('tmdb_session_id');
-    if (!sessionId) {
-      console.error("No hay sesión válida de TMDb.");
-      return;
-    }
-
     setLoading(true);
     setError(null);
 
     try {
-      // Obtener account_id de TMDb
-      const accountResponse = await fetch(`${API_BASE_URL}/account?api_key=${API_KEY}&session_id=${sessionId}`);
-      const accountData = await accountResponse.json();
-      if (!accountData.id) {
-        throw new Error("No se pudo obtener la cuenta de TMDb.");
-      }
-      const accountId = accountData.id;
-
-      // Añadir a favoritos en TMDb
-      const response = await fetch(`${API_BASE_URL}/account/${accountId}/favorite?api_key=${API_KEY}&session_id=${sessionId}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ media_type: "movie", media_id: movieId, favorite: true }),
-      });
-       console.log(response);
-
-      const data = await response.json();
-      if (!response.ok || data.status_code !== 1) {
-        throw new Error(data.status_message || "Error al agregar a favoritos en TMDb.");
+      // Si no hay datos de la película, no se agrega
+      if (!movieData) {
+        throw new Error("No se pudo obtener la información de la película.");
       }
 
-      // Guardar en Firestore si TMDb confirma la acción
+      // Guardar en Firestore
       await addDoc(collection(db, "favourites"), {
         userId: user.uid,
         movieId,
+        title: movieData.title,
+        overview: movieData.overview,
+        release_date: movieData.release_date,
+        poster_path: movieData.poster_path,
         timestamp: new Date(),
       });
 
