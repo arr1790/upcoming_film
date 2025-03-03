@@ -5,6 +5,7 @@ import Search from '../components/search';
 
 
 
+
 const Home = () => {
   const [movieListPage, setMovieListPage] = useState(1);
   const [movieList, setMovieList] = useState([]);
