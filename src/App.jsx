@@ -6,6 +6,7 @@ import MovieDetail from "./pages/MovieDetail";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Favourite from "./pages/Favourite";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<Home />} />
+        <Route path="/favourite" element = {<Favourite />} />
         <Route path="/movies/:movieId" element={<MovieDetail />} />
         <Route path="/" element={<Footer />} />
       </Routes>

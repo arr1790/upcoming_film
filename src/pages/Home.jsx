@@ -1,10 +1,7 @@
 
 import { useEffect,useState } from 'react';
 import MovieCard from '../components/MovieCard';
-import Search from "../components/Search";
-
-
-
+import Search from '../components/search';
 
 
 

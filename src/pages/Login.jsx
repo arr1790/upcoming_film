@@ -1,19 +1,21 @@
 import LoginForm from "../components/LoginForm";
-import React from "react";
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import authService from "../authService";
 import Spinner from "../components/Spinner";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 
 export default function Login() {
-
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
   
     const navigate = useNavigate();
-
     const { isLogged, setIsLogged } = useContext(AuthContext);
+
+    // Si el usuario ya está autenticado, redirigir a la página principal
+    if (isLogged) {
+        navigate("/");  // O la página que desees mostrar cuando el usuario ya está dentro
+    }
 
     const handleLogin = async ({ email, password }) => {
         setLoading(true);
@@ -23,7 +25,7 @@ export default function Login() {
             localStorage.setItem("user", JSON.stringify(user));
             setIsLogged(true);
             setLoading(false);
-            navigate("/");
+            navigate("/");  // Redirigir a la página principal después de iniciar sesión
         } catch (error) {
             setError(error.message);
             setLoading(false);
@@ -42,10 +44,11 @@ export default function Login() {
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                     {error && <p className="text-red-500 text-center">{error}</p>}
-                    <LoginForm onLogin={handleLogin} />
+                    {!isLogged && <LoginForm onLogin={handleLogin} />}
+                    {/* Aquí podrías mostrar algo diferente si el usuario ya está logueado */}
+                    {isLogged && <p className="text-green-500 text-center">¡Estás autenticado!</p>}
                 </div>
             </div>
         </AuthContext.Provider>
-    )
+    );
 }
-
