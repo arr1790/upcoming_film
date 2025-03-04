@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
 body {
-    @apply bg-gray-900 text-white; /* Fondo oscuro y texto blanco */
+    @apply bg-gray-900 text-white; 
   }
+
+
+
+/* Para el navbar */
+.navbar {
+    @apply bg-gray-800 p-4 flex justify-between items-center;
+}
+
+/* Para el menú móvil */
+.navbar-mobile {
+    @apply flex flex-col items-center bg-gray-700 p-4 mt-2 space-y-4 rounded-lg;
+}

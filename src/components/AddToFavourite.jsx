@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { db, auth } from "../firebaseConfig"; 
-import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import { db, auth } from "../firebaseConfig";
+import { collection, addDoc, query, where, getDocs, deleteDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 const API_KEY = 'a67ff818ee91cb525d9643b776006095';
 const API_BASE_URL = 'https://api.themoviedb.org/3';
@@ -58,7 +60,7 @@ function AddToFavourite({ movieId }) {
   const addToFav = async () => {
     const user = auth.currentUser;
     if (!user) {
-      console.error("Debes iniciar sesión para añadir a favoritos.");
+      toast.error("Debes iniciar sesión para añadir a favoritos.");
       return;
     }
 
@@ -91,6 +93,37 @@ function AddToFavourite({ movieId }) {
       setLoading(false);
     }
   };
+
+  // Eliminar todos los favoritos de un usuario cuando cierre sesión
+  const removeUserFavorites = async () => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const q = query(collection(db, "favourites"), where("userId", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+    
+    querySnapshot.forEach(async (docSnapshot) => {
+      // Eliminar cada documento de favoritos
+      await deleteDoc(docSnapshot.ref); // Eliminar el favorito
+      console.log(`Favorito eliminado: ${docSnapshot.id}`);
+    });
+  };
+
+  // Listener para detectar cuando el usuario cierra sesión
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user) {
+        // Si el usuario cierra sesión, eliminamos sus favoritos
+        removeUserFavorites();
+        // Resetear el estado de isFav a false
+        setIsFav(false);  // Limpiar los favoritos visualmente (corazones)
+      }
+    });
+
+    return () => {
+      unsubscribe(); // Limpiar el listener cuando el componente se desmonte
+    };
+  }, []);
 
   return (
     <div className="cursor-pointer" onClick={addToFav}>

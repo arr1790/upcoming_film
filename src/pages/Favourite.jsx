@@ -1,13 +1,13 @@
 import { db } from "../firebaseConfig";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";  // useEffect ejecuta código cuando cambia un estado (para hacer la petición a Firebase).
 import { AuthContext } from "../context/authContext";
 
 function Favourite() {
   const [favourites, setFavourites] = useState([]);
   const [loading, setLoading] = useState(true);  
   const [error, setError] = useState(null);
-  const { isLogged } = useContext(AuthContext);
+  const { isLogged } = useContext(AuthContext); // Obtiene del AuthContext si el usuario está autenticado.
 
   useEffect(() => {
     const fetchFavourites = async () => {
@@ -45,7 +45,7 @@ function Favourite() {
           favourites.map((fav, index) => (
             <li key={index} className="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all">
               <div className="flex">
-                <div className="relative w-32 h-48 flex-shrink-0"> {/* Imagen más pequeña */}
+                <div className="relative w-32 h-48 flex-shrink-0"> 
                   <img
                     className="absolute top-0 left-0 w-full h-full object-cover"
                     src={`https://image.tmdb.org/t/p/w500${fav.poster_path}`}

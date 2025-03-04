@@ -1,10 +1,8 @@
-
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import MovieCard from '../components/MovieCard';
-import Search from '../components/Search';
-
-
-
+import Search from '../components/search';
+import { ToastContainer, toast } from "react-toastify"; // Importa el toast también
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   const [movieListPage, setMovieListPage] = useState(1);
@@ -12,13 +10,21 @@ const Home = () => {
   const [listType, setListType] = useState('now_playing');
 
   const UPCOMING_URL = `https://api.themoviedb.org/3/movie/${listType}?api_key=a67ff818ee91cb525d9643b776006095&language=es-ES&page=${movieListPage}`;
-  // useFetch(UPCOMING_URL, setMovieList);
 
-   useEffect(() => {
-          fetch( UPCOMING_URL)
-              .then(response => response.json())
-              .then(data => {setMovieList(data.results); console.log(data.results)})
-      }, [listType, movieListPage]);
+  useEffect(() => {
+    fetch(UPCOMING_URL)
+      .then(response => response.json())
+      .then(data => {
+        setMovieList(data.results);
+        console.log(data.results);
+      
+      
+      })
+      .catch(error => {
+        toast.error("Hubo un error al cargar las películas.");
+        console.error(error);
+      });
+  }, [listType, movieListPage]);
 
   const handleListTypeChange = (type) => {
     setListType(type);
@@ -38,10 +44,12 @@ const Home = () => {
 
   const handleNextPage = () => {
     setMovieListPage(prevPage => prevPage + 1);
+    toast.info("Cargando página siguiente...");
   };
 
   const handlePrevPage = () => {
     setMovieListPage(prevPage => Math.max(prevPage - 1, 1));
+    toast.info("Cargando página anterior...");
   };
 
   return (
@@ -108,6 +116,9 @@ const Home = () => {
           </button>
         </div>
       </div>
+
+      {/* Aquí agregamos el ToastContainer */}
+      <ToastContainer />
     </>
   );
 };

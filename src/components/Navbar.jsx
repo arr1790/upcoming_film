@@ -1,4 +1,3 @@
-// src/components/Navbar.jsx
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import authService from '../authService';
@@ -11,7 +10,7 @@ const Navbar = () => {
     try {
       await authService.logout();
       localStorage.removeItem("user"); // Limpiar datos del usuario del localStorage
-      setIsLogged(false); // Actualizar estado en AuthContext
+      setIsLogged(false); 
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }
@@ -21,17 +20,26 @@ const Navbar = () => {
     <nav className="bg-gray-800 p-4">
       <ul className="flex justify-between items-center text-white">
         <li>
-          <Link to="/" className="hover:text-blue-400 ">Cine</Link>
-          {/* Mostrar enlaces de "Iniciar sesión" y "Registrarse" solo si no está logueado */}
+          <Link to="/" className="hover:text-blue-400">Cine</Link>
+         
           {!isLogged && (
             <>
               <Link to="/login" className="hover:text-blue-400 pl-4">Iniciar sesión</Link>
               <Link to="/register" className="hover:text-blue-400 pl-4">Registrarse</Link>
+              <Link to="/dashboard" className="hover:text-blue-400 pl-4">Gráfico Favoritos</Link>
             </>
           )}
-          {/* Mostrar enlace de "Favoritos" solo si el usuario está logueado */}
-          {isLogged && <Link to="/favourite" className="hover:text-blue-400 pl-4">Favoritos</Link>}
+
+      
+          {isLogged && (
+            <>
+              <Link to="/favourite" className="hover:text-blue-400 pl-4">Favoritos</Link>
+              {/* Enlace al gráfico de las películas favoritas */}
+              <Link to="/dashboard" className="hover:text-blue-400 pl-4">Gráfico Favoritos</Link>
+            </>
+          )}
         </li>
+
         {/* Mostrar botón de "Cerrar sesión" solo si el usuario está logueado */}
         <li>
           {isLogged && (
