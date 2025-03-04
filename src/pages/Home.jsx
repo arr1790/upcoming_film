@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import MovieCard from '../components/MovieCard';
-import Search from '../components/search';
+
 import { ToastContainer, toast } from "react-toastify"; // Importa el toast también
 import "react-toastify/dist/ReactToastify.css";
+import Search from '../components/Search';
 
 const Home = () => {
   const [movieListPage, setMovieListPage] = useState(1);

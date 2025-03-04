@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Search({ setMovieList }) {
+ function Search({ setMovieList }) {
   const [searchTerms, setSearchTerms] = useState('');
 
   const handleSearch = (e) => {
@@ -49,3 +49,4 @@ export default function Search({ setMovieList }) {
     </div>
   );
 }
+export default Search
