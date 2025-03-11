@@ -7,7 +7,6 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 // Registrar los componentes de Chart.js necesarios
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-
 const API_KEY = "a67ff818ee91cb525d9643b776006095"; 
 const TMDB_URL = "https://api.themoviedb.org/3/movie/";
 
@@ -39,7 +38,6 @@ const FavouriteMoviesChart = () => {
           count: movieCount[movieId],
         }));
 
-    
         const sortedMovies = movies.sort((a, b) => b.count - a.count).slice(0, 6);
 
         setFavouriteMovies(sortedMovies);
@@ -55,6 +53,11 @@ const FavouriteMoviesChart = () => {
 
         const counts = sortedMovies.map((movie) => movie.count);
 
+        // Generar colores aleatorios para cada barra
+        const randomColors = sortedMovies.map(() => 
+          `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.7)`
+        );
+
         // Preparar los datos para el gráfico
         setChartData({
           labels: movieTitles, // Usamos los títulos obtenidos de TMDb
@@ -62,9 +65,10 @@ const FavouriteMoviesChart = () => {
             {
               label: "Cantidad de veces que una película es favorita",
               data: counts,
-              backgroundColor: "rgba(75, 192, 192, 0.6)", // Color más vibrante
-              borderColor: "rgba(75, 192, 192, 1)",
-              borderWidth: 1,
+              backgroundColor: randomColors, // Colores aleatorios para cada barra
+              borderColor: randomColors.map((color) => color.replace("0.7", "1")), // Hacemos el borde de cada barra más oscuro
+              borderWidth: 2,
+              borderRadius: 10, // Bordes redondeados
             },
           ],
         });
@@ -80,11 +84,11 @@ const FavouriteMoviesChart = () => {
   }, []);
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
-      <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-        Películas Favoritas
+    <div className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-3xl mx-auto">
+      <h2 className="text-2xl font-bold text-center text-white mb-6">
+        Top 6 Películas Más Queridas por los Usuarios
       </h2>
-      {loading && <p className="text-center text-gray-600">Cargando...</p>}
+      {loading && <p className="text-center text-gray-400">Cargando...</p>}
       {error && <p className="text-center text-red-500">{error}</p>}
       {chartData ? (
         <div className="w-full h-96">
@@ -96,13 +100,24 @@ const FavouriteMoviesChart = () => {
               plugins: {
                 title: {
                   display: true,
-                  text: "Películas Favoritas por Usuarios",
+                  text: "Ranking de Películas Más Queridas",
                   font: {
-                    size: 16,
+                    size: 18,
                   },
+                  padding: 20,
+                  color: "#fff", // Color del título
                 },
                 legend: {
                   display: false, // Ocultar la leyenda si no es necesaria
+                },
+                tooltip: {
+                  backgroundColor: "rgba(0, 0, 0, 0.7)",
+                  titleFont: {
+                    size: 14,
+                  },
+                  bodyFont: {
+                    size: 12,
+                  },
                 },
               },
               scales: {
@@ -113,6 +128,13 @@ const FavouriteMoviesChart = () => {
                     font: {
                       size: 14,
                     },
+                    color: "#fff", // Color del texto en el eje X
+                  },
+                  ticks: {
+                    autoSkip: true, // Evitar que los títulos se solapen
+                    maxRotation: 45, // Rotar etiquetas para mejor visibilidad
+                    minRotation: 30,
+                    color: "#fff", // Color de las etiquetas
                   },
                 },
                 y: {
@@ -122,15 +144,20 @@ const FavouriteMoviesChart = () => {
                     font: {
                       size: 14,
                     },
+                    color: "#fff", // Color del texto en el eje Y
                   },
                   beginAtZero: true,
+                  ticks: {
+                    stepSize: 1, // Asegurarse de que las barras se vean bien
+                    color: "#fff", // Color de las etiquetas
+                  },
                 },
               },
             }}
           />
         </div>
       ) : (
-        !loading && <p className="text-center text-gray-600">No hay datos disponibles para mostrar.</p>
+        !loading && <p className="text-center text-gray-400">No hay datos disponibles para mostrar.</p>
       )}
     </div>
   );

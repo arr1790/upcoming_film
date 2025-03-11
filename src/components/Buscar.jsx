@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
- function Search({ setMovieList }) {
+function Search({ setMovieList }) {
   const [searchTerms, setSearchTerms] = useState('');
 
   const handleSearch = (e) => {
@@ -23,9 +23,12 @@ import { useState } from 'react';
   };
 
   return (
-    <div className="search">
-      <div className="search-container">
-        <form className="search flex items-center bg-gray-800 p-2 rounded-lg max-w-md mx-auto" onSubmit={handleSearch}>
+    <div className="search py-6">
+      <div className="search-container px-4">
+        <form 
+          className="search flex items-center bg-gray-800 p-2 rounded-lg max-w-lg mx-auto"
+          onSubmit={handleSearch}
+        >
           <input
             value={searchTerms}
             type="text"
@@ -49,4 +52,5 @@ import { useState } from 'react';
     </div>
   );
 }
-export default Search
+
+export default Search;

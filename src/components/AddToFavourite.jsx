@@ -45,7 +45,7 @@ function AddToFavourite({ movieId }) {
         );
 
         const querySnapshot = await getDocs(q);
-        setIsFav(!querySnapshot.empty);
+        setIsFav(!querySnapshot.empty);  // Si ya existe la película en favoritos
       } catch (err) {
         setError(err.message || "Error al comprobar favoritos.");
       } finally {
@@ -56,11 +56,11 @@ function AddToFavourite({ movieId }) {
     checkIfFavourite();
   }, [movieId, auth.currentUser]);
 
-  // Agregar la película a favoritos
-  const addToFav = async () => {
+  // Agregar o quitar la película de favoritos
+  const toggleFav = async () => {
     const user = auth.currentUser;
     if (!user) {
-      toast.error("Debes iniciar sesión para añadir a favoritos.");
+      toast.error("Debes iniciar sesión para añadir o quitar favoritos.");
       return;
     }
 
@@ -68,27 +68,48 @@ function AddToFavourite({ movieId }) {
     setError(null);
 
     try {
-      // Si no hay datos de la película, no se agrega
-      if (!movieData) {
-        throw new Error("No se pudo obtener la información de la película.");
+      // Si la película ya está en favoritos, la quitamos
+      if (isFav) {
+        // Buscar el documento en Firestore y eliminarlo
+        const q = query(
+          collection(db, "favourites"),
+          where("userId", "==", user.uid),
+          where("movieId", "==", movieId)
+        );
+        
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach(async (docSnapshot) => {
+          // Eliminar el favorito
+          await deleteDoc(docSnapshot.ref);
+          console.log(`Película ${movieId} eliminada de favoritos.`);
+        });
+
+        setIsFav(false);
+        toast.success(`Película ${movieId} eliminada de favoritos.`);
+      } else {
+        // Si la película no está en favoritos, la agregamos
+        if (!movieData) {
+          throw new Error("No se pudo obtener la información de la película.");
+        }
+
+        // Guardar en Firestore
+        await addDoc(collection(db, "favourites"), {
+          userId: user.uid,
+          movieId,
+          title: movieData.title,
+          overview: movieData.overview,
+          release_date: movieData.release_date,
+          poster_path: movieData.poster_path,
+          timestamp: new Date(),
+        });
+
+        setIsFav(true);
+        toast.success(`Película ${movieId} añadida a favoritos.`);
+        console.log(`Película ${movieId} añadida a favoritos.`);
       }
-
-      // Guardar en Firestore
-      await addDoc(collection(db, "favourites"), {
-        userId: user.uid,
-        movieId,
-        title: movieData.title,
-        overview: movieData.overview,
-        release_date: movieData.release_date,
-        poster_path: movieData.poster_path,
-        timestamp: new Date(),
-      });
-
-      setIsFav(true);
-      console.log(`Película ${movieId} añadida a favoritos.`);
     } catch (err) {
-      setError(err.message || "Error al añadir a favoritos.");
-      console.error("Error al añadir a favoritos:", err);
+      setError(err.message || "Error al añadir o eliminar favoritos.");
+      console.error("Error al añadir o eliminar favoritos:", err);
     } finally {
       setLoading(false);
     }
@@ -126,7 +147,7 @@ function AddToFavourite({ movieId }) {
   }, []);
 
   return (
-    <div className="cursor-pointer" onClick={addToFav}>
+    <div className="cursor-pointer" onClick={toggleFav}>
       {loading ? (
         <span>Loading...</span>
       ) : error ? (
