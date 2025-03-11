@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Buscar from '../components/Buscar';
 import { AuthContext } from '../context/authContext';
 import CarteleraPortada from '../components/CarteleraPortada';
-import Pagination from '../components/Pagination';
+import Pagination from '../components/pagination';
 
 const Home = () => {
   const [movieListPage, setMovieListPage] = useState(1);
