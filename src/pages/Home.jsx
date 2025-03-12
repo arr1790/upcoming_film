@@ -78,12 +78,14 @@ const Home = () => {
 
       <div className="p-4 sm:p-6">
         {welcomeMessage && (
-          <h1 className="text-2xl sm:text-4xl text-center text-green-500 mb-4 sm:mb-6">
+          <h1 className="text-2xl sm:text-4xl text-center text-gray-500 font-semibold transition-all duration-1000 transform scale-105 opacity-100 mb-4 sm:mb-6 animate-fadeIn p-4 rounded-lg">
             {welcomeMessage}
           </h1>
+
+
         )}
 
-        <CarteleraPortada featuredMovies={featuredMovies} />
+        <CarteleraPortada featuredMovies={featuredMovies} listType={listType} />
 
         <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-4 sm:mb-6">
           {mappedListType(listType)}
@@ -95,10 +97,10 @@ const Home = () => {
           ))}
         </div>
 
-        <Pagination 
-          currentPage={movieListPage} 
-          totalPages={totalPages} 
-          onPageChange={setMovieListPage} 
+        <Pagination
+          currentPage={movieListPage}
+          totalPages={totalPages}
+          onPageChange={setMovieListPage}
         />
       </div>
 

@@ -5,7 +5,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Grafico de peliculas favoritas</h1>
-      <FavouriteMoviesChart /> {/* Aquí es donde se muestra el gráfico */}
+      <FavouriteMoviesChart /> 
     </div>
   );
 };

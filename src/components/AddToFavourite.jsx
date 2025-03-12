@@ -45,7 +45,7 @@ function AddToFavourite({ movieId }) {
         );
 
         const querySnapshot = await getDocs(q);
-        setIsFav(!querySnapshot.empty);  // Si ya existe la película en favoritos
+        setIsFav(!querySnapshot.empty);  
       } catch (err) {
         setError(err.message || "Error al comprobar favoritos.");
       } finally {
@@ -68,9 +68,8 @@ function AddToFavourite({ movieId }) {
     setError(null);
 
     try {
-      // Si la película ya está en favoritos, la quitamos
       if (isFav) {
-        // Buscar el documento en Firestore y eliminarlo
+        // Eliminar de favoritos
         const q = query(
           collection(db, "favourites"),
           where("userId", "==", user.uid),
@@ -79,15 +78,13 @@ function AddToFavourite({ movieId }) {
         
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach(async (docSnapshot) => {
-          // Eliminar el favorito
           await deleteDoc(docSnapshot.ref);
-          console.log(`Película ${movieId} eliminada de favoritos.`);
+          console.log(`Película "${movieData?.title}" eliminada de favoritos.`);
         });
 
         setIsFav(false);
-        toast.success(`Película ${movieId} eliminada de favoritos.`);
+        toast.success(`Película "${movieData?.title}" eliminada de favoritos.`);
       } else {
-        // Si la película no está en favoritos, la agregamos
         if (!movieData) {
           throw new Error("No se pudo obtener la información de la película.");
         }
@@ -104,8 +101,8 @@ function AddToFavourite({ movieId }) {
         });
 
         setIsFav(true);
-        toast.success(`Película ${movieId} añadida a favoritos.`);
-        console.log(`Película ${movieId} añadida a favoritos.`);
+        toast.success(`Película "${movieData.title}" añadida a favoritos.`);
+        console.log(`Película "${movieData.title}" añadida a favoritos.`);
       }
     } catch (err) {
       setError(err.message || "Error al añadir o eliminar favoritos.");
@@ -114,37 +111,6 @@ function AddToFavourite({ movieId }) {
       setLoading(false);
     }
   };
-
-  // Eliminar todos los favoritos de un usuario cuando cierre sesión
-  const removeUserFavorites = async () => {
-    const user = auth.currentUser;
-    if (!user) return;
-
-    const q = query(collection(db, "favourites"), where("userId", "==", user.uid));
-    const querySnapshot = await getDocs(q);
-    
-    querySnapshot.forEach(async (docSnapshot) => {
-      // Eliminar cada documento de favoritos
-      await deleteDoc(docSnapshot.ref); // Eliminar el favorito
-      console.log(`Favorito eliminado: ${docSnapshot.id}`);
-    });
-  };
-
-  // Listener para detectar cuando el usuario cierra sesión
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (!user) {
-        // Si el usuario cierra sesión, eliminamos sus favoritos
-        removeUserFavorites();
-        // Resetear el estado de isFav a false
-        setIsFav(false);  // Limpiar los favoritos visualmente (corazones)
-      }
-    });
-
-    return () => {
-      unsubscribe(); // Limpiar el listener cuando el componente se desmonte
-    };
-  }, []);
 
   return (
     <div className="cursor-pointer" onClick={toggleFav}>

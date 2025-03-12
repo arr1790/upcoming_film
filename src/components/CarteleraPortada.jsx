@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const CarteleraPortada = ({ featuredMovies }) => {
+const CarteleraPortada = ({ featuredMovies, listType }) => {
   const [currentPosterIndex, setCurrentPosterIndex] = useState(0);
 
   if (!featuredMovies || featuredMovies.length === 0) {
@@ -33,10 +33,12 @@ const CarteleraPortada = ({ featuredMovies }) => {
             </h2>
           )}
 
-          {/* Etiqueta "Ya en tu cine" */}
-          <span className="text-xl lg:text-2xl bg-blue-600 px-4 py-2 rounded-full shadow-lg w-fit mx-auto lg:mx-0 text-white">
-            ¡Ya en tu cine!
-          </span>
+          {/* Mostrar la etiqueta "¡Ya en tu cine!" solo si el tipo es "now_playing" */}
+          {listType === 'now_playing' && (
+            <span className="text-xl lg:text-2xl bg-blue-600 px-4 py-2 rounded-full shadow-lg w-fit mx-auto lg:mx-0 text-white">
+              ¡Ya en tu cine!
+            </span>
+          )}
         </div>
 
         {/* Imagen de la película (formato horizontal) */}
