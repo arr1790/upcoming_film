@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Buscar from '../components/Buscar';
 import { AuthContext } from '../context/authContext';
 import CarteleraPortada from '../components/CarteleraPortada';
-import Pagination from '../components/pagination';
+import Pagination from '../components/Pagination';
 
 const Home = () => {
   const [movieListPage, setMovieListPage] = useState(1);
@@ -13,6 +13,8 @@ const Home = () => {
   const [listType, setListType] = useState('now_playing');
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { welcomeMessage } = useContext(AuthContext);
 
   const fetchMovies = async () => {
     setIsLoading(true);
@@ -55,40 +57,44 @@ const Home = () => {
   return (
     <>
       <div className="inline-block">
-        <div className="flex flex-wrap items-center justify-between p-6 bg-gray-900 text-white">
-          <ul className="flex flex-wrap justify-center sm:justify-start space-x-4 sm:space-x-6 mb-4 sm:mb-0">
+        <div className="flex flex-col sm:flex-row items-center justify-between p-4 sm:p-6 bg-gray-900 text-white">
+          <ul className="flex flex-wrap justify-center sm:justify-start space-x-2 sm:space-x-4 mb-4 sm:mb-0">
             {['now_playing', 'popular', 'top_rated', 'upcoming'].map((type) => (
               <li
                 key={type}
                 onClick={() => handleListTypeChange(type)}
-                className="px-4 py-2 cursor-pointer transition duration-300 hover:text-blue-800"
+                className="px-3 sm:px-4 py-2 cursor-pointer transition duration-300 hover:text-blue-800 text-sm sm:text-base"
               >
                 {mappedListType(type)}
               </li>
             ))}
           </ul>
-          <div className="flex-shrink-0 ml-0 sm:ml-12 w-full sm:w-auto mt-4 sm:mt-0">
+
+          <div className="w-full sm:w-auto">
             <Buscar movieList={movieList} setMovieList={setMovieList} />
           </div>
         </div>
       </div>
 
-      <div className="p-6">
-        {/* Mostrar la portada de las películas destacadas */}
-        <CarteleraPortada featuredMovies={featuredMovies} listType={listType} />
+      <div className="p-4 sm:p-6">
+        {welcomeMessage && (
+          <h1 className="text-2xl sm:text-4xl text-center text-green-500 mb-4 sm:mb-6">
+            {welcomeMessage}
+          </h1>
+        )}
 
-        <h2 className="text-3xl font-semibold text-gray-800 mb-6">
+        <CarteleraPortada featuredMovies={featuredMovies} />
+
+        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-4 sm:mb-6">
           {mappedListType(listType)}
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Mapeo de las películas */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {movieList.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
 
-        {/* Paginación */}
         <Pagination 
           currentPage={movieListPage} 
           totalPages={totalPages} 

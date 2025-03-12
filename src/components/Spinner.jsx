@@ -1,4 +1,4 @@
-
+//es el icono de cargando
 
 function Spinner({loading}) {
     return loading && (
