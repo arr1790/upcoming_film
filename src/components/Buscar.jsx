@@ -5,7 +5,7 @@ function Search({ setMovieList }) {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    
+
     // Verifica que el término de búsqueda no esté vacío
     if (!searchTerms.trim()) return;
 
@@ -14,11 +14,21 @@ function Search({ setMovieList }) {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log('Datos de la búsqueda:', data); 
-        setMovieList(data.results);
+        console.log('Datos de la búsqueda:', data);
+
+        // Filtramos las películas que no tienen imagen de fondo
+        const filteredMovies = data.results.filter((movie) => movie.backdrop_path);
+        
+        // Si no hay películas con imagen, mostramos un mensaje
+        if (filteredMovies.length === 0) {
+          alert("No se encontraron películas con imágenes para tu búsqueda.");
+        }
+
+        // Establecemos la lista de películas con las que tienen imagen
+        setMovieList(filteredMovies);
       })
       .catch((error) => {
-        console.error('Error en la búsqueda:', error); 
+        console.error('Error en la búsqueda:', error);
       });
   };
 

@@ -15,6 +15,14 @@ const CarteleraPortada = ({ featuredMovies, listType }) => {
   const firstLine = titleParts[0] + (titleParts.length > 1 ? ':' : '');
   const secondLine = titleParts.length > 1 ? titleParts.slice(1).join(':') : '';
 
+  // URL de la imagen por defecto (en caso de que no haya portada)
+  const defaultPosterImage = "https://via.placeholder.com/600x300?text=Sin+Portada";
+
+  // Obtener la URL de la imagen de la película, si está disponible
+  const backdropImageUrl = featuredMovies[currentPosterIndex].backdrop_path
+    ? `https://image.tmdb.org/t/p/original${featuredMovies[currentPosterIndex].backdrop_path}`
+    : defaultPosterImage;
+
   return (
     <div className="flex justify-center items-center mb-8 px-4">
       {/* Contenedor principal (título y etiqueta a la izquierda, imagen a la derecha) */}
@@ -32,19 +40,12 @@ const CarteleraPortada = ({ featuredMovies, listType }) => {
               {secondLine}
             </h2>
           )}
-
-          {/* Mostrar la etiqueta "¡Ya en tu cine!" solo si el tipo es "now_playing" */}
-          {listType === 'now_playing' && (
-            <span className="text-xl lg:text-2xl bg-blue-600 px-4 py-2 rounded-full shadow-lg w-fit mx-auto lg:mx-0 text-white">
-              ¡Ya en tu cine!
-            </span>
-          )}
         </div>
 
         {/* Imagen de la película (formato horizontal) */}
         <div className="relative w-full lg:w-[600px] h-[200px] lg:h-[300px] rounded-lg overflow-hidden">
           <img
-            src={`https://image.tmdb.org/t/p/original${featuredMovies[currentPosterIndex].backdrop_path}`}
+            src={backdropImageUrl} // Usar la imagen de la película o la imagen por defecto
             alt={movieTitle}
             className="w-full h-full object-cover"
           />
