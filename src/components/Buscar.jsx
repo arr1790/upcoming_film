@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 function Search({ setMovieList }) {
   const [searchTerms, setSearchTerms] = useState('');
+  const [noResults, setNoResults] = useState(false); // Estado para controlar si hay resultados
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -18,13 +19,15 @@ function Search({ setMovieList }) {
 
         // Filtramos las películas que no tienen imagen de fondo
         const filteredMovies = data.results.filter((movie) => movie.backdrop_path);
-        
-        // Si no hay películas con imagen, mostramos un mensaje
+
+        // Si no hay películas con imagen, mostramos el mensaje sin resultados
         if (filteredMovies.length === 0) {
-          alert("No se encontraron películas con imágenes para tu búsqueda.");
+          setNoResults(true);
+        } else {
+          setNoResults(false);
         }
 
-        // Establecemos la lista de películas con las que tienen imagen
+        // Establecemos la lista de películas
         setMovieList(filteredMovies);
       })
       .catch((error) => {
@@ -35,7 +38,7 @@ function Search({ setMovieList }) {
   return (
     <div className="search py-6">
       <div className="search-container px-4">
-        <form 
+        <form
           className="search flex items-center bg-gray-800 p-2 rounded-lg max-w-lg mx-auto"
           onSubmit={handleSearch}
         >
@@ -54,6 +57,15 @@ function Search({ setMovieList }) {
           </button>
         </form>
       </div>
+
+      {/* Mostrar el mensaje de "No hay películas" si no hay resultados */}
+      {noResults && (
+        <div className="results mt-4 text-center">
+          <h2 className="text-gray-300">No hay películas con ese nombre.</h2>
+        </div>
+      )}
+
+      {/* Mostrar el término de búsqueda si está presente */}
       <div className="results mt-4 text-center">
         <h2 className="search-terms text-gray-300">
           {searchTerms !== '' ? `Búsqueda: ${searchTerms}` : ''}
