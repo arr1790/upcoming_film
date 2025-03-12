@@ -23,16 +23,22 @@ function Search({ setMovieList }) {
         // Si no hay películas con imagen, mostramos el mensaje sin resultados
         if (filteredMovies.length === 0) {
           setNoResults(true);
+          setMovieList([]); // Limpiar la lista de películas si no hay resultados
+          setSearchTerms(''); // Limpiar el campo de búsqueda
         } else {
           setNoResults(false);
+          setMovieList(filteredMovies); // Establecer las películas si hay resultados
         }
-
-        // Establecemos la lista de películas
-        setMovieList(filteredMovies);
       })
       .catch((error) => {
         console.error('Error en la búsqueda:', error);
       });
+  };
+
+  const handleReset = () => {
+    setSearchTerms('');
+    setNoResults(false);
+    setMovieList([]); // Reinicia la lista de películas al inicio
   };
 
   return (
@@ -62,6 +68,12 @@ function Search({ setMovieList }) {
       {noResults && (
         <div className="results mt-4 text-center">
           <h2 className="text-gray-300">No hay películas con ese nombre.</h2>
+          <button
+            onClick={handleReset} // Botón para reiniciar la búsqueda
+            className="mt-4 bg-gray-600 text-white px-6 py-2 rounded-lg transition duration-300 hover:bg-gray-700"
+          >
+            Volver al inicio
+          </button>
         </div>
       )}
 
