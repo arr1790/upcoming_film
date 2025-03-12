@@ -9,14 +9,14 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
-      setWelcomeMessage("🎬 ¡Bienvenido! Disfruta de la cartelera 🎟️");
+      setWelcomeMessage("🎬 ¡Bienvenido ! Disfruta de la cartelera 🎟️");
     }
 
     const handleStorageChange = () => {
       const updatedUser = localStorage.getItem("user");
       setIsLogged(!!updatedUser);
       if (updatedUser) {
-        setWelcomeMessage("🎬 ¡Bienvenido! Disfruta de la cartelera 🎟️");
+        setWelcomeMessage("🎬 ¡Bienvenido de nuevo! Disfruta de la cartelera 🎟️");
       } else {
         setWelcomeMessage("");
       }

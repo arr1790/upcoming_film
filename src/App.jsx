@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Favourite from "./pages/Favourite";
-import Dashboard from "./pages/Dashboard"
+import Dashboard from "./pages/Dashboard";
 
 const App = () => {
   return (
@@ -17,11 +17,11 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<Home />} />
-        <Route path="/favourite" element = {<Favourite />} />
+        <Route path="/favourite" element={<Favourite />} />
         <Route path="/movies/:movieId" element={<MovieDetail />} />
-        <Route path="/" element={<Footer />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
+      <Footer /> 
     </Router>
   );
 };

@@ -86,7 +86,7 @@ const FavouriteMoviesChart = () => {
   return (
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-3xl mx-auto">
       <h2 className="text-2xl font-bold text-center text-white mb-6">
-        Top 6 Películas Más Queridas por los Usuarios
+        Top 6 Películas Más favoritas por los Usuarios
       </h2>
       {loading && <p className="text-center text-gray-400">Cargando...</p>}
       {error && <p className="text-center text-red-500">{error}</p>}
@@ -100,7 +100,7 @@ const FavouriteMoviesChart = () => {
               plugins: {
                 title: {
                   display: true,
-                  text: "Ranking de Películas Más Queridas",
+                  text: "Ranking de Películas Más Votadas como Favoritas",
                   font: {
                     size: 18,
                   },
