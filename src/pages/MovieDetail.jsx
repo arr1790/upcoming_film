@@ -1,9 +1,7 @@
-// src/pages/CourseDetail.jsx
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Spinner from '../components/Spinner';
-
 
 const MovieDetail = () => {
   const { movieId } = useParams();
@@ -13,11 +11,11 @@ const MovieDetail = () => {
 
   const [movie, setMovie] = useState({});
   const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchMovieData = async () => {
-      setLoading(true)
+      setLoading(true);
       try {
         const [movieResponse, videoResponse] = await Promise.all([
           fetch(MOVIE_URL).then((res) => res.json()),
@@ -26,10 +24,10 @@ const MovieDetail = () => {
 
         setMovie(movieResponse);
         setVideos(videoResponse.results);
-        setLoading(false)
+        setLoading(false);
       } catch (error) {
-        console.error("Error fetching movie data:", error);
-        setLoading(false)
+        console.error('Error fetching movie data:', error);
+        setLoading(false);
       }
     };
 
@@ -41,7 +39,7 @@ const MovieDetail = () => {
       <Spinner loading={loading} />
       <div className="relative w-full bg-[#0b1b35] flex justify-center items-center">
         {videos.length > 0 ? (
-          <div className="w-full h-[500px]">
+          <div className="w-full h-[250px] md:h-[500px]">
             <iframe
               className="w-full h-full"
               src={`https://www.youtube.com/embed/${videos[0].key}`}
@@ -53,56 +51,58 @@ const MovieDetail = () => {
           <img
             src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
             alt={movie.title}
-            className="w-full h-[500px] object-cover"
+            className="w-full h-[250px] md:h-[500px] object-cover"
           />
         )}
       </div>
-      
-      <div className="relative z-10 w-full max-w-6xl mx-auto p-6 lg:flex lg:items-start lg:space-x-10 bg-[#0b1b35] text-white mt-10 rounded-lg shadow-lg">
-        <div className="w-full lg:w-[250px] flex flex-col items-center">
+
+      <div className="relative z-10 w-full max-w-6xl mx-auto p-4 lg:p-6 lg:flex lg:items-start lg:space-x-10 bg-[#0b1b35] text-white mt-6 rounded-lg shadow-lg">
+        <div className="w-full lg:w-[250px] flex flex-col items-center mb-6 lg:mb-0">
           <img
             src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
             alt={movie.title}
             className="w-full h-auto rounded-lg shadow-md"
           />
         </div>
-        
+
         <div className="flex-1">
-          <h2 className="text-4xl font-bold">{movie.title}</h2>
-          
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold">{movie.title}</h2>
+
           {/* Actores */}
           <div className="mt-4">
-            <p className="text-gray-300">{movie?.actors?.join(', ')}</p>
+            <p className="text-gray-300 text-sm sm:text-base">
+              {movie?.actors?.join(', ')}
+            </p>
           </div>
-  
+
           {/* Sinopsis */}
           <div className="mt-4">
             <h3 className="text-lg font-semibold">SINOPSIS</h3>
-            <p className="text-gray-300">{movie.overview}</p>
+            <p className="text-gray-300 text-sm sm:text-base">{movie.overview}</p>
           </div>
-  
+
           {/* Detalles */}
           <div className="mt-4 flex flex-wrap gap-4 text-gray-300">
             <div>
               <h3 className="text-lg font-semibold">DURACIÓN</h3>
               <p>{movie.runtime} min</p>
             </div>
-  
+
             <div>
               <h3 className="text-lg font-semibold">VALORACIÓN</h3>
               <p>{movie.vote_average}/10</p>
             </div>
-  
+
             <div>
               <h3 className="text-lg font-semibold">FECHA DE ESTRENO</h3>
-              <p>{new Date(movie.release_date).toLocaleDateString("es-ES")}</p>
+              <p>{new Date(movie.release_date).toLocaleDateString('es-ES')}</p>
             </div>
           </div>
-  
+
           {/* Géneros */}
-          <div className="mt-4 flex gap-2">
+          <div className="mt-4 flex gap-2 flex-wrap">
             {movie?.genres?.map((genre) => (
-              <span key={genre.id} className="px-3 py-1 border rounded-lg text-sm">
+              <span key={genre.id} className="px-3 py-1 border rounded-lg text-xs sm:text-sm">
                 {genre.name}
               </span>
             ))}
@@ -111,5 +111,6 @@ const MovieDetail = () => {
       </div>
     </>
   );
-};  
+};
+
 export default MovieDetail;
