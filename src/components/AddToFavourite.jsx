@@ -95,7 +95,7 @@ function AddToFavourite({ movieId }) {
         });
 
         setIsFav(false);
-        toast.success(`Película "${movieData?.title}" eliminada de favoritos.`);
+        toast.error(`Película "${movieData?.title}" eliminada de favoritos.`);
       } else {
         if (!movieData) {
           throw new Error("No se pudo obtener la información de la película.");

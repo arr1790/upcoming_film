@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom'; // Importamos useLocation
 
 function Search({ setMovieList }) {
   const [searchTerms, setSearchTerms] = useState('');
   const [noResults, setNoResults] = useState(false); // Estado para controlar si hay resultados
+  const location = useLocation(); // Hook para obtener la ruta actual
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -37,6 +39,21 @@ function Search({ setMovieList }) {
       });
   };
 
+  // Restablecer `noResults` a false cuando el usuario cambie de ruta
+  useEffect(() => {
+    setNoResults(false); // Restablecemos noResults a false cada vez que cambie la ruta
+  }, [location]); // Este efecto se ejecutará cada vez que cambie la ubicación
+
+  // Restablecer `noResults` a `false` cuando el usuario empiece a escribir nuevamente
+  const handleChange = (e) => {
+    setSearchTerms(e.target.value);
+
+    // Si el campo de búsqueda no está vacío, restablecemos noResults a false
+    if (e.target.value.trim() !== '') {
+      setNoResults(false);
+    }
+  };
+
   return (
     <div className="search py-6">
       <div className="search-container px-4">
@@ -49,7 +66,7 @@ function Search({ setMovieList }) {
             type="text"
             className="search__input w-full py-2 pl-4 pr-12 bg-gray-700 text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
             placeholder="Buscar película..."
-            onChange={(e) => setSearchTerms(e.target.value)}
+            onChange={handleChange} // Usamos la nueva función handleChange
           />
           <button
             type="submit"
