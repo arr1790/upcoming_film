@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { db, auth } from "../firebaseConfig";
-import { collection, addDoc, query, where, getDocs, deleteDoc } from "firebase/firestore";
+import { collection, addDoc, query, where, getDocs, deleteDoc, onSnapshot } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 
@@ -28,7 +28,7 @@ function AddToFavourite({ movieId }) {
     fetchMovieData();
   }, [movieId]);
 
-  // Comprobar si la película ya está en los favoritos
+  // Comprobar si la película ya está en los favoritos y limpiar favoritos cuando el usuario se desloguea
   useEffect(() => {
     const checkIfFavourite = async () => {
       const user = auth.currentUser;
@@ -45,7 +45,7 @@ function AddToFavourite({ movieId }) {
         );
 
         const querySnapshot = await getDocs(q);
-        setIsFav(!querySnapshot.empty);  
+        setIsFav(!querySnapshot.empty);
       } catch (err) {
         setError(err.message || "Error al comprobar favoritos.");
       } finally {
@@ -54,7 +54,19 @@ function AddToFavourite({ movieId }) {
     };
 
     checkIfFavourite();
-  }, [movieId, auth.currentUser]);
+  }, [movieId]);
+
+  // Limpiar favoritos cuando el usuario cierre sesión
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user) {
+        // Si el usuario no está logueado, limpiar los favoritos del estado
+        setIsFav(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   // Agregar o quitar la película de favoritos
   const toggleFav = async () => {
