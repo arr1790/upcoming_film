@@ -1,7 +1,7 @@
 import React from "react";
 import FavouriteMoviesChart from "../components/FavouriteMoviesChart"; // Asegúrate de importar correctamente el componente
 
-const Dashboard = () => {
+const Graph = () => {
   return (
     <div>
       <h1>Grafico de peliculas favoritas</h1>
@@ -10,4 +10,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Graph;

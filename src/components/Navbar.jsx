@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useContext, useState } from 'react'; // 
 import authService from '../authService';
 import { AuthContext } from '../context/authContext';
 
@@ -33,7 +33,7 @@ const Navbar = () => {
 
           {/* Menú en pantallas grandes */}
           <ul className="hidden lg:flex space-x-6 items-center">
-            <li><Link to="/dashboard" className="hover:text-blue-400">Gráfico Favoritos</Link></li>
+            <li><Link to="/graph" className="hover:text-blue-400">Gráfico Favoritos</Link></li>
             <li><Link to="/about" className="hover:text-blue-400">Quiénes Somos</Link></li>
 
             {/* Aquí está la comprobación de si el usuario está logueado */}
@@ -65,7 +65,7 @@ const Navbar = () => {
       {/* Menú desplegable en móviles */}
       {isMenuOpen && (
         <ul className="lg:hidden flex flex-col space-y-4 mt-4 text-white bg-gray-800 p-4 rounded-md">
-          <li><Link to="/dashboard" className="hover:text-blue-400" onClick={() => setIsMenuOpen(false)}>Gráfico Favoritos</Link></li>
+          <li><Link to="/graph" className="hover:text-blue-400" onClick={() => setIsMenuOpen(false)}>Gráfico Favoritos</Link></li>
           <li><Link to="/about" className="hover:text-blue-400" onClick={() => setIsMenuOpen(false)}>Quiénes Somos</Link></li>
           
           {/* Aquí también se comprueba si el usuario está logueado en el menú móvil */}

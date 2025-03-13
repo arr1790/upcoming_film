@@ -16,10 +16,10 @@ const MovieCard = ({ movie }) => {
 
       <div className="flex justify-between items-center">
         <h2 className="text-white text-lg font-semibold truncate">{movie.title}</h2>
-        <AddToFavourite movieId={movie.id} /> {/* Asegúrate de pasar el ID de la película */}
+        <AddToFavourite movieId={movie.id} /> 
       </div>
 
-      <p className="text-gray-600 mt-2 line-clamp-3">{movie.overview}</p>
+       <p className="text-gray-600 mt-2 line-clamp-3">{movie.overview}</p> {/*resumen de la peliculas */}
 
       <div className="flex justify-between items-center mt-2">
         <span className="text-gray-600">
@@ -27,7 +27,7 @@ const MovieCard = ({ movie }) => {
         </span>
 
         <span className="text-yellow-400 font-semibold">
-          {movie.vote_average.toFixed(1)}
+          {movie.vote_average.toFixed(1)} {/*las valoracion lo pongo a 1 para lo decimal que muestre solo el primer numero */}
         </span>
 
         <Link

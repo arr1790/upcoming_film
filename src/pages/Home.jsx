@@ -72,7 +72,6 @@ const Home = () => {
             ))}
           </ul>
 
-          {/* Buscador */}
           <div className="w-full sm:w-auto">
             <Buscar movieList={movieList} setMovieList={setMovieList} />
           </div>

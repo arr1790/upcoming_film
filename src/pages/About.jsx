@@ -15,7 +15,7 @@ const About = () => {
         <p className="max-w-3xl text-base sm:text-lg text-gray-300 text-center mt-6 sm:mt-8 px-4">
           Bienvenido a <span className="text-blue-400 font-semibold">CINE 🎞️</span>, tu plataforma favorita para descubrir, 
           guardar y calificar películas. Nos apasiona el cine y queremos ofrecerte la mejor experiencia para encontrar nuevas películas, 
-          explorar géneros y compartir tus favoritos con amigos.
+          explorar géneros y mostrar tus favoritos con amigos.
         </p>
   
         {/* Nuestra Misión */}

@@ -7,10 +7,10 @@ const CarteleraPortada = ({ featuredMovies, listType }) => {
     return null; // No mostrar nada si no hay películas
   }
 
-  // Obtener el título de la película actual
+  
   const movieTitle = featuredMovies[currentPosterIndex].title;
 
-  // Dividir el título en dos líneas (si es necesario)
+
   const titleParts = movieTitle.split(':');
   const firstLine = titleParts[0] + (titleParts.length > 1 ? ':' : '');
   const secondLine = titleParts.length > 1 ? titleParts.slice(1).join(':') : '';
@@ -18,23 +18,22 @@ const CarteleraPortada = ({ featuredMovies, listType }) => {
   // URL de la imagen por defecto (en caso de que no haya portada)
   const defaultPosterImage = "https://via.placeholder.com/600x300?text=Sin+Portada";
 
-  // Obtener la URL de la imagen de la película, si está disponible
   const backdropImageUrl = featuredMovies[currentPosterIndex].backdrop_path
     ? `https://image.tmdb.org/t/p/original${featuredMovies[currentPosterIndex].backdrop_path}`
     : defaultPosterImage;
 
   return (
     <div className="flex justify-center items-center mb-8 px-4">
-      {/* Contenedor principal (título y etiqueta a la izquierda, imagen a la derecha) */}
+     
       <div className="flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-8">
-        {/* Título y etiqueta a la izquierda */}
+      
         <div className="flex flex-col space-y-4 text-center lg:text-left">
-          {/* Primera línea del título */}
+          
           <h2 className="text-4xl lg:text-6xl font-bold text-white">
             {firstLine}
           </h2>
 
-          {/* Segunda línea del título (si existe) */}
+    
           {secondLine && (
             <h2 className="text-4xl lg:text-6xl font-bold text-white">
               {secondLine}
@@ -42,15 +41,15 @@ const CarteleraPortada = ({ featuredMovies, listType }) => {
           )}
         </div>
 
-        {/* Imagen de la película (formato horizontal) */}
+  
         <div className="relative w-full lg:w-[600px] h-[200px] lg:h-[300px] rounded-lg overflow-hidden">
           <img
-            src={backdropImageUrl} // Usar la imagen de la película o la imagen por defecto
+            src={backdropImageUrl} 
             alt={movieTitle}
             className="w-full h-full object-cover"
           />
 
-          {/* Botón para retroceder */}
+         
           <button
             onClick={() =>
               setCurrentPosterIndex((prev) =>
@@ -59,10 +58,10 @@ const CarteleraPortada = ({ featuredMovies, listType }) => {
             }
             className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full"
           >
-            &#10094; {/* Ícono de flecha izquierda */}
+            &#10094; 
           </button>
 
-          {/* Botón para avanzar */}
+       
           <button
             onClick={() =>
               setCurrentPosterIndex((prev) =>
@@ -71,7 +70,7 @@ const CarteleraPortada = ({ featuredMovies, listType }) => {
             }
             className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full"
           >
-            &#10095; {/* Ícono de flecha derecha */}
+            &#10095; 
           </button>
         </div>
       </div>

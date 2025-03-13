@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { db, auth } from "../firebaseConfig";
 import { collection, addDoc, query, where, getDocs, deleteDoc, onSnapshot } from "firebase/firestore";
 import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
+
 
 const API_KEY = 'a67ff818ee91cb525d9643b776006095';
 const API_BASE_URL = 'https://api.themoviedb.org/3';

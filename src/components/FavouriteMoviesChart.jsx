@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebaseConfig";
 import { collection, getDocs, query } from "firebase/firestore";
-import { Bar } from "react-chartjs-2"; // Usamos un gráfico de barras
+import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 
 // Registrar los componentes de Chart.js necesarios
@@ -47,7 +47,7 @@ const FavouriteMoviesChart = () => {
           sortedMovies.map(async (movie) => {
             const response = await fetch(`${TMDB_URL}${movie.movieId}?api_key=${API_KEY}&language=es-ES`);
             const data = await response.json();
-            return data.title || `Película ${movie.movieId}`; // Usar el título de TMDb o un valor por defecto
+            return data.title || `Película ${movie.movieId}`; 
           })
         );
 
@@ -65,7 +65,7 @@ const FavouriteMoviesChart = () => {
             {
               label: "Cantidad de veces que una película es favorita",
               data: counts,
-              backgroundColor: randomColors, // Colores aleatorios para cada barra
+              backgroundColor: randomColors, 
               borderColor: randomColors.map((color) => color.replace("0.7", "1")), // Hacemos el borde de cada barra más oscuro
               borderWidth: 2,
               borderRadius: 10, // Bordes redondeados

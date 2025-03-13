@@ -14,12 +14,12 @@ export default function LoginForm({ onLogin }) {
     };
 
     const handleClose = () => {
-        navigate("/"); // Redirigir a la página principal
+        navigate("/"); // para ir al inicio
     };
 
     return (
         <div className="relative p-6 bg-gray-800 rounded-lg shadow-lg">
-            {/* Botón de cerrar (X) */}
+         
             <button
                 onClick={handleClose}
                 className="absolute top-2 right-2 text-white text-2xl hover:text-gray-300"

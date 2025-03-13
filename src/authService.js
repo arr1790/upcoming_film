@@ -7,16 +7,16 @@ import {
 } from "firebase/auth";
 import { app } from "./firebaseConfig";
 
-const authentication = getAuth(app); // Instancia de autenticación de Firebase
+const authentication = getAuth(app); 
 
 const authService = {
-  // Registro de un nuevo usuario con nombre
+ 
   register: async (name, email, password) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(authentication, email, password);
       const user = userCredential.user;
 
-      // Actualizar el perfil con el nombre del usuario
+      
       await updateProfile(user, { displayName: name });
 
       // Guardar usuario en localStorage
@@ -32,7 +32,7 @@ const authService = {
     }
   },
 
-  // Inicio de sesión con email y contraseña
+  
   login: async (email, password) => {
     try {
       const userCredential = await signInWithEmailAndPassword(authentication, email, password);
@@ -57,7 +57,7 @@ const authService = {
     return user ? JSON.parse(user) : null;
   },
 
-  // Cerrar sesión y eliminar datos locales
+
   logout: async () => {
     try {
       await signOut(authentication);

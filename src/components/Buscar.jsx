@@ -31,7 +31,7 @@ function Search({ setMovieList }) {
           setMovieList(filteredMovies); // Establecer las películas si hay resultados
         }
 
-        // Limpiar el campo de búsqueda después de buscar
+ 
         setSearchTerms('');
       })
       .catch((error) => {
@@ -39,16 +39,16 @@ function Search({ setMovieList }) {
       });
   };
 
-  // Restablecer `noResults` a false cuando el usuario cambie de ruta
-  useEffect(() => {
-    setNoResults(false); // Restablecemos noResults a false cada vez que cambie la ruta
-  }, [location]); // Este efecto se ejecutará cada vez que cambie la ubicación
 
-  // Restablecer `noResults` a `false` cuando el usuario empiece a escribir nuevamente
+  useEffect(() => {
+    setNoResults(false);
+  }, [location]); 
+
+  
   const handleChange = (e) => {
     setSearchTerms(e.target.value);
 
-    // Si el campo de búsqueda no está vacío, restablecemos noResults a false
+ 
     if (e.target.value.trim() !== '') {
       setNoResults(false);
     }
@@ -66,7 +66,7 @@ function Search({ setMovieList }) {
             type="text"
             className="search__input w-full py-2 pl-4 pr-12 bg-gray-700 text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
             placeholder="Buscar película..."
-            onChange={handleChange} // Usamos la nueva función handleChange
+            onChange={handleChange} 
           />
           <button
             type="submit"
@@ -84,7 +84,7 @@ function Search({ setMovieList }) {
         </div>
       )}
 
-      {/* Mostrar el término de búsqueda si está presente */}
+   
       <div className="results mt-4 text-center">
         <h2 className="search-terms text-gray-300">
           {searchTerms !== '' ? `Búsqueda: ${searchTerms}` : ''}

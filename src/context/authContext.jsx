@@ -9,7 +9,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
-      setWelcomeMessage("🎬 ¡Bienvenido ! Disfruta de la cartelera 🎟️");
+      setWelcomeMessage("🎬 ¡Bienvenido! Disfruta de la cartelera 🎟️");
+    } else {
+      setWelcomeMessage(""); // Aseguramos que el mensaje de bienvenida esté vacío si no está logueado
     }
 
     const handleStorageChange = () => {
@@ -18,7 +20,7 @@ export const AuthProvider = ({ children }) => {
       if (updatedUser) {
         setWelcomeMessage("🎬 ¡Bienvenido de nuevo! Disfruta de la cartelera 🎟️");
       } else {
-        setWelcomeMessage("");
+        setWelcomeMessage("")
       }
     };
 
