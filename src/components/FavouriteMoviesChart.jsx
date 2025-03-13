@@ -11,8 +11,8 @@ const API_KEY = "a67ff818ee91cb525d9643b776006095";
 const TMDB_URL = "https://api.themoviedb.org/3/movie/";
 
 const FavouriteMoviesChart = () => {
-  const [favouriteMovies, setFavouriteMovies] = useState([]);
-  const [chartData, setChartData] = useState(null);
+  const [favouriteMovies, setFavouriteMovies] = useState([]); //Es el estado que contendrá los datos de las películas favorita en principio el array estara vacio 
+  const [chartData, setChartData] = useState(null); //Es el estado que almacenará los datos que se usarán para renderizar el gráfico de barras (titulos etc...)
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -23,7 +23,7 @@ const FavouriteMoviesChart = () => {
         const q = query(collection(db, "favourites"));
         const querySnapshot = await getDocs(q);
 
-        const movieCount = {};
+        const movieCount = {}; //para contar y lo pones vacio al principiio
 
         // Contar cuántas veces cada película ha sido marcada como favorita
         querySnapshot.forEach((doc) => {
@@ -40,7 +40,7 @@ const FavouriteMoviesChart = () => {
 
         const sortedMovies = movies.sort((a, b) => b.count - a.count).slice(0, 6);
 
-        setFavouriteMovies(sortedMovies);
+        setFavouriteMovies(sortedMovies); //actualizada el favor
 
         // Obtener los títulos reales de las películas desde TMDb API
         const movieTitles = await Promise.all(

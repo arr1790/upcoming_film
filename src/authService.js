@@ -57,7 +57,7 @@ const authService = {
     return user ? JSON.parse(user) : null;
   },
 
-
+  // Cerrar sesión y eliminar datos locales
   logout: async () => {
     try {
       await signOut(authentication);

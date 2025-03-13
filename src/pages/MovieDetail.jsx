@@ -68,12 +68,7 @@ const MovieDetail = () => {
         <div className="flex-1">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold">{movie.title}</h2>
 
-          {/* Actores */}
-          <div className="mt-4">
-            <p className="text-gray-300 text-sm sm:text-base">
-              {movie?.actors?.join(', ')}
-            </p>
-          </div>
+         
 
           {/* Sinopsis */}
           <div className="mt-4">
