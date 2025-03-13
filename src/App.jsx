@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Favourite from "./pages/Favourite";
 import Dashboard from "./pages/Dashboard";
+import About from "./pages/About"; // 🔹 Importamos la nueva página
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/favourite" element={<Favourite />} />
         <Route path="/movies/:movieId" element={<MovieDetail />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/about" element={<About />} /> {/* 🔹 Nueva ruta */}
       </Routes>
       <Footer /> 
     </Router>

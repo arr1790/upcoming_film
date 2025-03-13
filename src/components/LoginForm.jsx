@@ -78,20 +78,7 @@ export default function LoginForm({ onLogin }) {
                     </div>
                 </div>
 
-                {/* Checkbox de "Recuérdame" */}
-                <div className="flex items-center">
-                    <input
-                        id="rememberMe"
-                        name="rememberMe"
-                        type="checkbox"
-                        checked={rememberMe}
-                        onChange={(e) => setRememberMe(e.target.checked)}
-                        className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-600"
-                    />
-                    <label htmlFor="rememberMe" className="ml-2 block text-sm text-white">
-                        Recuérdame
-                    </label>
-                </div>
+               
 
                 <div>
                     <button
@@ -103,12 +90,7 @@ export default function LoginForm({ onLogin }) {
                 </div>
             </form>
 
-            {/* Enlace para recuperar contraseña */}
-            <div className="mt-4 text-center">
-                <a href="/forgot-password" className="text-sm text-blue-500 hover:text-blue-400">
-                    Recuperar contraseña
-                </a>
-            </div>
+            
         </div>
     );
 }

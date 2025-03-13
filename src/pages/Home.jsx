@@ -56,47 +56,53 @@ const Home = () => {
 
   return (
     <>
-      <div className="inline-block">
-        <div className="flex flex-col sm:flex-row items-center justify-between p-4 sm:p-6 bg-gray-900 text-white">
-          <ul className="flex flex-wrap justify-center sm:justify-start space-x-2 sm:space-x-4 mb-4 sm:mb-0">
+      <div className="inline-block w-full">
+        {/* Contenedor de la lista y el buscador */}
+        <div className="flex flex-col sm:flex-row items-center justify-center p-4 sm:p-6 bg-gray-900 text-white">
+          {/* Lista de opciones (Cartelera, Populares, etc.) */}
+          <ul className="flex flex-wrap justify-center space-x-2 sm:space-x-4 mb-4 sm:mb-0">
             {['now_playing', 'popular', 'top_rated', 'upcoming'].map((type) => (
               <li
                 key={type}
                 onClick={() => handleListTypeChange(type)}
-                className="px-3 sm:px-4 py-2 cursor-pointer transition duration-300 hover:text-blue-800 text-sm sm:text-base"
+                className="px-3 sm:px-4 py-2 cursor-pointer transition duration-300 hover:text-blue-400 text-sm sm:text-base"
               >
                 {mappedListType(type)}
               </li>
             ))}
           </ul>
 
+          {/* Buscador */}
           <div className="w-full sm:w-auto">
             <Buscar movieList={movieList} setMovieList={setMovieList} />
           </div>
         </div>
       </div>
 
+      {/* Contenido principal */}
       <div className="p-4 sm:p-6">
         {welcomeMessage && (
           <h1 className="text-2xl sm:text-4xl text-center text-gray-500 font-semibold transition-all duration-1000 transform scale-105 opacity-100 mb-4 sm:mb-6 animate-fadeIn p-4 rounded-lg">
             {welcomeMessage}
           </h1>
-
-
         )}
 
+        {/* Cartelera de portada */}
         <CarteleraPortada featuredMovies={featuredMovies} listType={listType} />
 
+        {/* Título de la lista */}
         <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-4 sm:mb-6">
           {mappedListType(listType)}
         </h2>
 
+        {/* Lista de películas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {movieList.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
 
+        {/* Paginación */}
         <Pagination
           currentPage={movieListPage}
           totalPages={totalPages}
@@ -104,6 +110,7 @@ const Home = () => {
         />
       </div>
 
+      {/* Notificaciones */}
       <ToastContainer />
     </>
   );

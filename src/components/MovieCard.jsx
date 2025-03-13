@@ -6,11 +6,14 @@ const MovieCard = ({ movie }) => {
 
   return (
     <div className="border border-gray-300 rounded-lg p-4 shadow-md hover:shadow-xl">
-      <img
-        src={movie.poster_path ? imageUrlBase + movie.poster_path : "ruta_imagen_respaldo.jpg"}
-        alt={movie.title}
-        className="object-cover mb-4"
-      />
+      <div className="relative overflow-hidden rounded-lg">
+        <img
+          src={movie.poster_path ? imageUrlBase + movie.poster_path : "ruta_imagen_respaldo.jpg"}
+          alt={movie.title}
+          className="object-cover mb-4 transition-transform duration-300 transform hover:scale-110"
+        />
+      </div>
+
       <div className="flex justify-between items-center">
         <h2 className="text-white text-lg font-semibold truncate">{movie.title}</h2>
         <AddToFavourite movieId={movie.id} /> {/* Asegúrate de pasar el ID de la película */}

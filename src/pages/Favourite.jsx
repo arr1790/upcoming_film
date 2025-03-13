@@ -33,7 +33,7 @@ function Favourite() {
 
   return (
     <div className="min-h-screen bg-gray-900 p-4">
-      <h1 className="text-white text-2xl font-bold mb-4">TOP PELICULAS</h1>
+      <h1 className="text-white text-2xl font-bold mb-4">PELICULAS FAVORITAS</h1>
 
       {loading && <p className="text-white">Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
